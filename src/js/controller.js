@@ -27,8 +27,10 @@ const renderSpinner = parentEl => {
   parentEl.insertAdjacentHTML('afterbegin', markup);
 };
 
-const fetchRecipe = async id => {
+const fetchRecipe = async () => {
   try {
+    const id = window.location.hash.slice(1); //Remove # from string
+    if (!id) return;
     // Load recipe
     renderSpinner(recipeContainer);
     const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
@@ -153,4 +155,6 @@ const fetchRecipe = async id => {
   }
 };
 
-fetchRecipe("5ed6604591c37cdc054bcd09");
+// window.addEventListener("haschange", fetchRecipe);
+// window.addEventListener("load", fetchRecipe);
+["hashchange", "load"].forEach(ev => window.addEventListener(ev, fetchRecipe));

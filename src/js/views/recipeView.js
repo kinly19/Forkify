@@ -1,7 +1,6 @@
 // import icons from `../img/icons.svg`; // Parcel 1
 import icons from 'url:../../img/icons.svg'; // Parcel 2
 import { Fraction } from 'fractional';
-console.log(Fraction)
 
 class RecipeView {
   // Private properties
@@ -18,20 +17,24 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
-  #clearMarkup() {
-    this.#parentElement.innerHTML = "";
-  }
-
   renderSpinner() {
     const markup = `
-        <div class="spinner">
-          <svg>
-            <use href="${icons}.svg#icon-loader"></use>
-          </svg>
-        </div>
-      `;
+    <div class="spinner">
+    <svg>
+    <use href="${icons}.svg#icon-loader"></use>
+    </svg>
+    </div>
+    `;
     this.#clearMarkup();
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  addHandlerRender(func) {
+    ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, func));
+  }
+  
+  #clearMarkup() {
+    this.#parentElement.innerHTML = "";
   }
 
   #generateMarkup() {

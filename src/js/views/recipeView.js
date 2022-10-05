@@ -6,6 +6,8 @@ class RecipeView {
   // Private properties
   #parentElement = document.querySelector('.recipe');
   #data;
+  #errorrMessage = "We could not find that recipe. Please try another one!";
+  #messsage = "";
 
   render(data) {
     // Store data
@@ -19,14 +21,46 @@ class RecipeView {
 
   renderSpinner() {
     const markup = `
-    <div class="spinner">
-    <svg>
-    <use href="${icons}.svg#icon-loader"></use>
-    </svg>
-    </div>
+      <div class="spinner">
+        <svg>
+          <use href="${icons}.svg#icon-loader"></use>
+        </svg>
+      </div>
     `;
     this.#clearMarkup();
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderError(errMsg = this.#errorrMessage) {  // If no error message is passed in, use default
+    const markup = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${icons}.svg#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${errMsg}</p>
+      </div>
+    `;
+
+    this.#clearMarkup();
+    this.#parentElement.insertAdjacentHTML("afterbegin", markup);
+  }
+
+  renderMessage(message = this.#messsage) {  // If no error message is passed in, use default
+    const markup = `
+      <div class="message">
+        <div>
+          <svg>
+            <use href="${icons}.svg#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>
+    `;
+
+    this.#clearMarkup();
+    this.#parentElement.insertAdjacentHTML("afterbegin", markup);
   }
 
   addHandlerRender(func) {

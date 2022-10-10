@@ -1,5 +1,6 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
+import searchView from './views/searchView.js';
 // Support old browser
 import 'core-js/stable'; // polyfil
 import 'regenerator-runtime/runtime'; // polyfil async functions
@@ -29,7 +30,21 @@ const controlRecipes = async () => {
   }
 };
 
+const controlSearchResults = async () => {
+  try {
+    // Get search query
+    const query = searchView.getQuery();
+    if(!query) return;
+    // Load search results
+    await model.loadSearchResults(query);
+    console.log(model.state.recipes.results);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const init = () => {
   recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandler(controlSearchResults);
 }
 init();

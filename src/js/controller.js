@@ -2,6 +2,7 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
 // Support old browser
 import 'core-js/stable'; // polyfil
 import 'regenerator-runtime/runtime'; // polyfil async functions
@@ -40,14 +41,24 @@ const controlSearchResults = async () => {
     // Load search results
     await model.loadSearchResults(query);
     // Render results
-    resultsView.render(model.state.recipes.results);
+    resultsView.render(model.getSearchResultsPage());
+    // Render pagination buttons
+    paginationView.render(model.state.recipes);
   } catch (err) {
     console.log(err);
   }
 };
 
+const controlPagination = (goToPage) => {
+  // Render new results
+  resultsView.render(model.getSearchResultsPage(goToPage));
+  // Re new pagination buttons
+  paginationView.render(model.state.recipes);
+}
+
 const init = () => {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandler(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 }
 init();

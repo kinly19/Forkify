@@ -49,6 +49,8 @@ export const loadSearchResults = async query => {
         imageURL: rec.image_url,
       };
     });
+    // Set page value back to 1 on each new recipe search
+    state.recipes.page = 1;
   } catch (err) {
     console.log(err);
     throw err;

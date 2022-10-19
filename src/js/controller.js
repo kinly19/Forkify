@@ -20,6 +20,8 @@ const controlRecipes = async () => {
     // Get recipe id from url after #
     const id = window.location.hash.slice(1); //Remove # from string
     if (!id) return;
+    // Mark selected search results
+    resultsView.update(model.getSearchResultsPage());
     // Render spinner
     recipeView.renderSpinner();
     // Load recipe

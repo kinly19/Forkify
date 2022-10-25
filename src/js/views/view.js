@@ -2,7 +2,7 @@ import icons from 'url:../../img/icons.svg'; // Parcel 2
 
 export default class View {
   _data;
-  _errorrMessage = "No recipes found for your query! Please try again";
+  _errorMessage = "No recipes found for your query! Please try again";
   _messsage = "";
 
   render(data) {
@@ -63,7 +63,7 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
-  renderError(errMsg = this._errorrMessage) {  // If no error message is passed in, use default
+  renderError(errMsg = this._errorMessage) {  // If no error message is passed in, use default
     const markup = `
       <div class="error">
         <div>

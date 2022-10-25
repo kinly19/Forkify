@@ -53,7 +53,7 @@ export const loadSearchResults = async query => {
         id: rec.id,
         title: rec.title,
         publisher: rec.publisher,
-        imageURL: rec.image_url,
+        image: rec.image_url,
       };
     });
     // Set states 'page' value back to 1 on each new recipe search

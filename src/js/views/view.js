@@ -5,14 +5,16 @@ export default class View {
   _errorMessage = "No recipes found for your query! Please try again";
   _messsage = "";
 
-  render(data) {
+  render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0)) return this.renderError();
     // Store data
     this._data = data;
-    // Remove inital markup
-    this._clearMarkup();
-    // Render markup to DOM
     const markup = this._generateMarkup();
+
+    if (!render) return markup;
+    
+    // Render markup to DOM/clear inital markup
+    this._clearMarkup();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
@@ -24,7 +26,6 @@ export default class View {
     const newDOM = document.createRange().createContextualFragment(newMarkup);
     const newElements = Array.from(newDOM.querySelectorAll('*'));
     const curElements = Array.from(this._parentElement.querySelectorAll('*'));
-
     // console.log("%cCurrent DOM elements","color: orange")
     // console.log(curElements);
     // console.log("%cNew DOM elements","color: green")

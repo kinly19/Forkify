@@ -3,6 +3,7 @@ import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
+import bookmarksView from './views/bookmarksView.js';
 // Support old browser
 import 'core-js/stable'; // polyfil
 import 'regenerator-runtime/runtime'; // polyfil async functions
@@ -22,6 +23,8 @@ const controlRecipes = async () => {
     if (!id) return;
     // Mark selected search results
     resultsView.update(model.getSearchResultsPage());
+    // Update bookmarks view
+    bookmarksView.update(model.state.bookmarks);
     // Render spinner
     recipeView.renderSpinner();
     // Load recipe
@@ -66,19 +69,28 @@ const controlServings = (newServing) => {
 }
 
 const controlAddBookmark = () => {
+  // Add/remove bookmark
   if (!model.state.recipe.bookmarked) {
     model.addBookMark(model.state.recipe);
   } else {
     model.removeBookmark(model.state.recipe.id);
   }
   console.log(model.state);
+  // Update recipe view
   recipeView.update(model.state.recipe);
+  // Render bookmarks list
+  bookmarksView.render(model.state.bookmarks);
+}
+
+const controlBookmarks = () => {
+  bookmarksView.render(model.state.bookmarks);
 }
 
 const init = () => {
+  bookmarksView.addhandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
-  recipeView.addHandlerUpdateServings(controlServings)
-  recipeView.addHandlerAddBookmark(controlAddBookmark)
+  recipeView.addHandlerUpdateServings(controlServings);
+  recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandler(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 }

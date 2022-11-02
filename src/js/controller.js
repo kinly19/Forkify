@@ -1,5 +1,5 @@
 import * as model from './model.js';
-import { MODAL_CLOSE_SEC } from './config.js'
+import { MODAL_CLOSE_SEC, RENDER_MARKUP_SEC } from './config.js'
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
@@ -108,11 +108,14 @@ const controlAddRecipe = async (newRecipe) => {
     // Change ID in url
     window.history.pushState(null, '', `#${model.state.recipe.id}`);
 
-    // Close modal after a few seconds
+    // Close modal after a x seconds/Re-render form
     setTimeout(() => {
       addRecipeView.toggleWindow();
+      setTimeout(() => {
+        addRecipeView.render(model.state.recipe);
+      }, RENDER_MARKUP_SEC * 1000);
     }, MODAL_CLOSE_SEC * 1000);
-    
+
   } catch (err) {
     addRecipeView.renderError(err.message);
   }

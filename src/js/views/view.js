@@ -5,8 +5,18 @@ export default class View {
   _errorMessage = "No recipes found for your query! Please try again";
   _messsage = "";
 
+  /**
+   * Render the received object to the DOM
+   * @param {Object | Object[]} data The data to be rendered (e.g recipe)
+   * @param {Boolean} [render=true] If false, create markup string instead of rendering to the DOM
+   * @param {string} Markup Markup used to render into DOM
+   * @returns {undefined | string} A markup string is returned if render=false
+   * @this {Object} View instance
+   * @author Kly
+   */
+
   render(data, render = true) {
-    if (!data || (Array.isArray(data) && data.length === 0)) return this.renderError();
+    if (!data || (Array.isArray(data) && data.length === 0)) return this.renderError(); // This is where the controlSearchResults error comes from
     // Store data
     this._data = data;
     const markup = this._generateMarkup();
@@ -18,6 +28,10 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  /**
+   * Update DOM with updated content
+   * @param {Object} data Data to be updated into DOM
+  */
   update(data) {
     this._data = data;
     const newMarkup = this._generateMarkup();

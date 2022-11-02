@@ -91,23 +91,18 @@ const controlBookmarks = () => {
 const controlAddRecipe = async (newRecipe) => {
   try {
     // Show spinner
-    addRecipeView.renderSpinner()
+    addRecipeView.renderSpinner();
     // Upload recipe
     await model.uploadRecipe(newRecipe);
     console.log(model.state.recipe);
-
     // render recipe view
-    recipeView.render(model.state.recipe)
-    
+    recipeView.render(model.state.recipe);
     // Show success message
     addRecipeView.renderMessage();
-
     // Render bookmarks view
     bookmarksView.render(model.state.bookmarks);
-
     // Change ID in url
     window.history.pushState(null, '', `#${model.state.recipe.id}`);
-
     // Close modal after a x seconds/Re-render form
     setTimeout(() => {
       addRecipeView.toggleWindow();
@@ -119,7 +114,6 @@ const controlAddRecipe = async (newRecipe) => {
   } catch (err) {
     addRecipeView.renderError(err.message);
   }
- 
 }
 
 const init = () => {

@@ -1,5 +1,5 @@
-import icons from 'url:../../img/icons.svg';
 import View from "./view.js";
+import icons from 'url:../../img/icons.svg';
 
 class previewView extends View {
   _parentElement = '';
@@ -18,7 +18,7 @@ class previewView extends View {
             <p class="preview__publisher">${this._data.publisher}</p>
             <div class="preview__user-generated ${this._data.key ? "" : "hidden"}">
               <svg>
-                <use href="${icons}.svg#icon-user"></use>
+                <use href="${icons}#icon-user"></use>
               </svg>
             </div>
           </div>
